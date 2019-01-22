@@ -1,7 +1,11 @@
-require "qingcloud/cli/version"
+require "optimist"
+require "httparty"
+require "openssl"
+require "base64"
 
-module Qingcloud
-  module Cli
-    # Your code goes here...
-  end
-end
+require "qingcloud/cli/version"
+require "qingcloud/cli/app"
+
+require "qingcloud/api/client"
+require "qingcloud/api/base"
+require "qingcloud/api/iaas"
