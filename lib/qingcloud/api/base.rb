@@ -24,11 +24,19 @@ module Qingcloud
       end
 
       def request_body 
-        options.merge(base_parameters).sort.map { |key, value|
-          "#{CGI.escape key.to_s}=#{CGI.escape value.to_s}"
+        base_parameters.merge(options).sort.map { |key, value|
+          if value.is_a? Array
+            if key.to_s.include? '_N'
+              value.map { |v|
+                  "#{CGI.escape key.to_s.gsub('_N', '').to_s}.#{value.index(v)+1}=#{CGI.escape v.to_s}"
+              }.join('&')
+            end
+          else
+            "#{CGI.escape key.to_s}=#{CGI.escape value.to_s}"
+          end
         }.join('&')
       end
-
+      
       def sign_by(str)
         digest = OpenSSL::Digest.new('sha256')
         hmac = OpenSSL::HMAC.digest(digest, client.secret_access_key, "#{str}#{request_body}")
