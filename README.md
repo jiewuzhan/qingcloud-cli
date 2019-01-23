@@ -111,7 +111,9 @@ $ qingcloud describe-instances -z ap1
   "total_count": 0,
   "ret_code": 0
 }
+```
 
+```bash
 # Run Instances
 
 $ qingcloud run-instances -m centos7x64b -l keypair -k keypair-id -C 1 -M 1024 -z ap1
@@ -123,7 +125,7 @@ $ qingcloud run-instances -m centos7x64b -l keypair -k keypair-id -C 1 -M 1024 -
   "job_id": "job-id",
   "ret_code": 0
 }
-
+```
 
 ## Contributing
 
