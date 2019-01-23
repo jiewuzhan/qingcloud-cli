@@ -1,39 +1,121 @@
 # Qingcloud::Cli
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/qingcloud/cli`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Command line tool for QingCloud
 
 ## Installation
 
-Add this line to your application's Gemfile:
+This tool(gem) is not ready, you can only install it from source code. It'll be published to [RubyGems](https://rubygems.org) when it's ok.
 
-```ruby
-gem 'qingcloud-cli'
-```
+Get Code from Github:
 
-And then execute:
+	$ git clone https://github.com/jiewuzhan/qingcloud-cli.git
 
-    $ bundle
+Build and Install with Bundle:
 
-Or install it yourself as:
+    $ cd qingcloud-cli
+    $ bundle install
+    $ bundle exec rake install
 
-    $ gem install qingcloud-cli
+## Uninstall
+
+	$ gem uninstall qingcloud-cli
+	
 
 ## Usage
 
-TODO: Write usage instructions here
+    Usage:
+        qingcloud [options] [<command> [suboptions]]
 
-## Development
+    Options:
+        -v, --version    Print version and exit
+        -h, --help       Show help message
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+    Commands:
+        describe-instances   Get the list of host computers.
+        run-instances        Create host computers.
+        terminate-instances  Destroy host computers.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+## Getting Started
+
+After install this command line tool, just bring up your terminal and give it a try.
+
+```bash
+$ qingcloud --help
+Usage:
+  qingcloud [options] [<command> [suboptions]]
+
+Options:
+  -v, --version    Print version and exit
+  -h, --help       Show help message
+
+Commands:
+  describe-instances   Get the list of host computers.
+  run-instances        Create host computers.
+  terminate-instances  Destroy host computers.
+```
+
+```bash
+$ qingcloud describe-instances --help
+Usage: qingcloud describe-instances [options]
+
+Specific options:
+  -i, --instances-N=<s>                主机ID
+  -m, --image-id-N=<s>                 一个或多个映像ID
+  -n, --instance-type-N=<s>            主机配置类型
+  -s, --instance-class=<i>             主机性能类型: 性能型:0, 超高性能型:1
+  -t, --status-N=<s>                   主机状态: pending, running, stopped, suspended, terminated, ceased
+  -e, --search-word=<s>                搜索关键词, 支持主机ID, 主机名称
+  -a, --tags-N=<s>                     按照标签ID过滤, 只返回已绑定某标签的资源
+  -d, --dedicated-host-group-id=<s>    按照专属宿主机组过滤
+  -c, --dedicated-host-id=<s>          按照专属宿主机组中某个宿主机过滤
+  -o, --owner=<s>                      按照用户账户过滤, 只返回指定账户的资源
+  -v, --verbose=<i>                    是否返回冗长的信息, 若为1, 则返回主机相关其他资源的详细数据。
+  -f, --offset=<i>                     数据偏移量, 默认为0 (default: 0)
+  -l, --limit=<i>                      返回数据长度，默认为20，最大100 (default: 20)
+  -z, --zone=<s>                       区域ID，注意要小写
+  -h, --help                           Show this message
+```
+
+#### Command Suggestions
+
+```bash
+$ qingcloud des # press enter now, and you will get subcommand suggestions
+qingcloud describe-instances
+```
+
+## Example
+
+```bash
+# Describe Instances
+
+$ qingcloud describe-instances -z ap1
+{
+  "action": "DescribeInstancesResponse",
+  "instance_set": [
+
+  ],
+  "total_count": 0,
+  "ret_code": 0
+}
+
+# Run Instances
+
+$ qingcloud run-instances -m centos7x64b -l keypair -k keypair-id -C 1 -M 1024 -z ap1
+{
+  "action": "RunInstancesResponse",
+  "instances": [
+    "instance-id"
+  ],
+  "job_id": "job-id",
+  "ret_code": 0
+}
+
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/qingcloud-cli. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+1. Fork it ( https://github.com/jiewuzhan/qingcloud-cli/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
 
-## Code of Conduct
-
-Everyone interacting in the Qingcloud::Cli project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/qingcloud-cli/blob/master/CODE_OF_CONDUCT.md).
