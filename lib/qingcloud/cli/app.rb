@@ -60,8 +60,10 @@ module Qingcloud
 
       protected
       def opt_run_instances
+        command = @command
         Optimist::options do
-          banner "options for #{@command}"
+          banner "Usage: qingcloud #{command} [options]\n \n"
+          banner "Specific options:"
           opt :image_id, "映像ID，此映像将作为主机的模板。可传青云提供的映像ID，或自己创建的映像ID", required: true, type: :string
           opt :instance_type, "主机类型", type: :string
           opt :cpu, "CPU core，有效值为: 1, 2, 4, 8, 16", type: :integer
@@ -99,8 +101,10 @@ module Qingcloud
       end
   
       def opt_describe_instances
+        command = @command
         Optimist::options do
-          banner "options for #{@command}"
+          banner "Usage: qingcloud #{command} [options]\n \n"
+          banner "Specific options:"
           opt :instances_N, "主机ID", type: :string, multi: true 
           opt :image_id_N, "一个或多个映像ID", type: :string, multi: true 
           opt :instance_type_N, "主机配置类型", type: :string, multi: true 
@@ -119,8 +123,10 @@ module Qingcloud
       end
 
       def opt_terminate_instances
+        command = @command
         Optimist::options do
-          banner "options for #{@command}"
+          banner "Usage: qingcloud #{command} [options]\n \n"
+          banner "Specific options:"
           opt :instances_N, "一个或多个主机ID", required: true, type: :string, multi: true
           opt :direct_cease, "是否直接彻底销毁主机，如果指定 “1” 则不会进入回收站直接销毁，默认是 “0”", default: 0
           opt :zone, "区域ID，注意要小写", type: :string
