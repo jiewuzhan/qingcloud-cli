@@ -4,7 +4,11 @@ Command line tool for QingCloud
 
 ## Installation
 
-This tool(gem) is not ready, you can only install it from source code. It'll be published to [RubyGems](https://rubygems.org) when it's ok.
+##### From [RubyGems](https://rubygems.org)
+
+    $ gem install qingcloud-cli
+
+##### From source code  
 
 Get Code from Github:
 
@@ -16,7 +20,7 @@ Build and Install with Bundle:
     $ bundle install
     $ bundle exec rake install
 
-##### Setup your API keys
+### Setup your API keys
 Please go to [QingCloud Console](https://console.qingcloud.com/access_keys/) to create a pair of QingCloud API keys.  
 And edit your configure file in "~/.qingcloud/config.yml".
 
