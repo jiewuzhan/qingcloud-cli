@@ -16,6 +16,16 @@ Build and Install with Bundle:
     $ bundle install
     $ bundle exec rake install
 
+##### Setup your API keys
+Please go to [QingCloud Console](https://console.qingcloud.com/access_keys/) to create a pair of QingCloud API keys.  
+And edit your configure file in "~/.qingcloud/config.yml".
+
+```yaml
+qy_access_key_id: 'OFZKUIJWKYEVGGEKALTP'
+qy_secret_access_key: '51mHFcuSSRSirpsWzONFJqg2ZRIZLzQRlFRoigt3'
+zone: 'pek3'
+```
+
 ## Uninstall
 
 	$ gem uninstall qingcloud-cli
