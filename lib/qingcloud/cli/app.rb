@@ -8,9 +8,8 @@ module Qingcloud
       }
   
       def initialize(client, args=[])
-        @subopts, @command = nil, nil
         @client = client
-  
+
         @mainopts = Optimist::options do
           synopsis "A Command Line Interface for QingCloud API."
           version "qingcloud v#{Qingcloud::Cli::VERSION}"
@@ -25,32 +24,43 @@ module Qingcloud
           banner "\nCommands:"
           COMMAND_MAP.each { |cmd, desc| banner format("  %-20s %s", cmd, desc) }
         end
-  
+
         @command = args.shift
+        @subopts = nil
+      end
+
+      def call!
+        command_array = COMMAND_MAP.keys
 
         if @command.nil?
           puts "Error: must with options or command."
           puts "Try --help for help."
           return
-        elsif COMMAND_MAP.keys.include?(@command)
-          self.send("opt_#{@command.gsub("-", "_")}")
+        elsif command_array.include?(@command)
+          @subopts = self.send("opt_#{@command.gsub("-", "_")}")
+
+          ret = 
+            Qingcloud::Api::Iaas.new(
+              @client, 
+              @command.split('-').map(&:capitalize).join, 
+              @subopts.select { |k, v| !k.to_s.end_with?("_given") && (v.is_a?(Array) ? !v.empty? : v) }
+            ).invoke
+         
+          puts "\n\nResponse: "
+          ap ret.parsed_response
+        elsif (sug = command_array.select { |x| x.start_with? @command }.compact) && !sug.empty? 
+          puts sug
+          return 
         else 
           puts "Error: unknown command #{@command}."
           puts "Try --help for help."
           return
         end
-        
-        ret = Qingcloud::Api::Iaas.new(
-          @client, 
-          @command.split('-').map(&:capitalize).join, 
-          @subopts.select { |k, v| !k.to_s.end_with?("_given") && (v.is_a?(Array) ? !v.empty? : v) }).invoke
-       
-        puts "\n\nResponse: "
-        ap ret.parsed_response
       end
-  
+
+      protected
       def opt_run_instances
-        @subopts = Optimist::options do
+        Optimist::options do
           banner "options for #{@command}"
           opt :image_id, "映像ID，此映像将作为主机的模板。可传青云提供的映像ID，或自己创建的映像ID", required: true, type: :string
           opt :instance_type, "主机类型", type: :string
@@ -89,7 +99,7 @@ module Qingcloud
       end
   
       def opt_describe_instances
-        @subopts = Optimist::options do
+        Optimist::options do
           banner "options for #{@command}"
           opt :instances_N, "主机ID", type: :string, multi: true 
           opt :image_id_N, "一个或多个映像ID", type: :string, multi: true 
@@ -109,7 +119,7 @@ module Qingcloud
       end
 
       def opt_terminate_instances
-        @subopts = Optimist::options do
+        Optimist::options do
           banner "options for #{@command}"
           opt :instances_N, "一个或多个主机ID", required: true, type: :string, multi: true
           opt :direct_cease, "是否直接彻底销毁主机，如果指定 “1” 则不会进入回收站直接销毁，默认是 “0”", default: 0
