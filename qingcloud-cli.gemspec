@@ -37,4 +37,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "optimist"
   spec.add_development_dependency "httparty"
+  spec.add_development_dependency "awesome_print"
 end

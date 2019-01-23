@@ -1,5 +1,6 @@
 require "optimist"
 require "httparty"
+require "awesome_print"
 require "openssl"
 require "base64"
 
