@@ -3,5 +3,6 @@
 require "bundler/setup"
 require "qingcloud/cli"
 
-client = Qingcloud::Api::Client.new('OFZKUIJWKYEVGGEKALTP', '51mHFcuSSRSirpsWzONFJqg2ZRIZLzQRlFRoigt3', 'pek3')
+config_map = YAML.load_file("client.yml")["client"]
+client = Qingcloud::Api::Client.new(config_map['qy_access_key_id'], config_map['qy_secret_access_key'], config_map['zone'])
 Qingcloud::Cli::App.new client, ARGV
