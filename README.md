@@ -25,9 +25,9 @@ Please go to [QingCloud Console](https://console.qingcloud.com/access_keys/) to 
 And edit your configure file in "~/.qingcloud/config.yml".
 
 ```yaml
-qy_access_key_id: 'OFZKUIJWKYEVGGEKALTP'
-qy_secret_access_key: '51mHFcuSSRSirpsWzONFJqg2ZRIZLzQRlFRoigt3'
-zone: 'pek3'
+qy_access_key_id: 'QINGCLOUDACCESSKEYID'
+qy_secret_access_key: 'QINGCLOUDSECRETACCESSKEYEXAMPLE'
+zone: 'pek1'
 ```
 
 ## Uninstall
